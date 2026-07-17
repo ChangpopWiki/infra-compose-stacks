@@ -1,0 +1,23 @@
+services:
+  reverse-proxy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - SITE_DOMAIN=changpop.wiki
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      chp_proxy:
+
+networks:
+  chp_proxy:
+    external: true
+
+volumes:
+  caddy_data:
+  caddy_config:

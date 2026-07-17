@@ -1,0 +1,6 @@
+# 개발용 compose 파일, `cp compose.dev.yaml compose.override.yaml`
+
+services:
+  reverse-proxy:
+    environment:
+      - SITE_DOMAIN=http://changpopwiki.localhost
