@@ -1,16 +1,22 @@
 services:
   reverse-proxy:
-    image: caddy:2-alpine
+    image: ghcr.io/serfriz/caddy-cloudflare-crowdsec:2
     restart: unless-stopped
+    entrypoint: /entrypoint.sh
     ports:
       - "80:80"
       - "443:443"
     environment:
       - SITE_DOMAIN=changpop.wiki
+      - CROWDSEC_API_KEY_FILE=/run/secrets/crowdsec_api_key
     volumes:
+      - ./entrypoint.sh:/entrypoint.sh:ro
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
+      - ./log:/log
+    secrets:
+      - crowdsec_api_key
     networks:
       chp_proxy:
 
@@ -21,3 +27,7 @@ networks:
 volumes:
   caddy_data:
   caddy_config:
+
+secrets:
+  crowdsec_api_key:
+    file: ./secrets/crowdsec_api_key

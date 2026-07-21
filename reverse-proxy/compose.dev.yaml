@@ -1,6 +1,22 @@
-# 개발용 compose 파일, `cp compose.dev.yaml compose.override.yaml`
-
 services:
   reverse-proxy:
     environment:
-      - SITE_DOMAIN=http://changpopwiki.localhost
+      - SITE_DOMAIN=http://chp.localhost
+    depends_on:
+      caddy-validate:
+        condition: service_completed_successfully
+
+  caddy-validate:
+    image: ghcr.io/serfriz/caddy-cloudflare-crowdsec:2
+    command: caddy validate --config /Caddyfile
+    environment:
+      - SITE_DOMAIN=http://chp.localhost
+    volumes:
+      - ./Caddyfile:/Caddyfile:ro
+
+  caddy-format:
+    image: ghcr.io/serfriz/caddy-cloudflare-crowdsec:2
+    profiles: [ "one-shot" ]
+    command: caddy fmt --overwrite --config /Caddyfile
+    volumes:
+      - ./Caddyfile:/Caddyfile

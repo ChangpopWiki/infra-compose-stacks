@@ -1,0 +1,6 @@
+# 개발 환경에서:
+# `cp compose.dev.yaml compose.override.yaml`
+
+include:
+  - ./crowdsec/compose.dev.yaml
+  - ./reverse-proxy/compose.dev.yaml

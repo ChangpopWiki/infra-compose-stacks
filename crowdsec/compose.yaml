@@ -1,0 +1,26 @@
+services:
+  crowdsec:
+    image: crowdsecurity/crowdsec:latest
+    restart: unless-stopped
+    environment:
+      COLLECTIONS: "crowdsecurity/caddy crowdsecurity/linux"
+    healthcheck:
+      test: [ "CMD", "cscli", "lapi", "status" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - crowdsec-db:/var/lib/crowdsec/data
+      - crowdsec-config:/etc/crowdsec
+      - ./acquis.d:/etc/crowdsec/acquis.d:ro
+      - ../reverse-proxy/log:/var/log/caddy:ro
+    networks:
+      chp_proxy:
+
+volumes:
+  crowdsec-db:
+  crowdsec-config:
+
+networks:
+  chp_proxy:
+    external: true

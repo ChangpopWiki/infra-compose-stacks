@@ -1,0 +1,3 @@
+include:
+  - ./crowdsec/compose.yaml
+  - ./reverse-proxy/compose.yaml
