@@ -12,7 +12,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "${SCRIPT_DIR}"
 
 BOUNCER_NAME="caddy-bouncer"
-SECRET_PATH="../reverse-proxy/secrets/crowdsec_api_key"
+SECRET_PATH="../reverse-proxy/var/secrets/crowdsec_api_key"
 
 # sudo로 실행됐다면(SUDO_UID/SUDO_GID는 sudo가 자동 설정) 스크립트 종료 시
 # 생성된 파일의 소유권을 원래 호출한 사용자로 되돌립니다.

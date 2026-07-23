@@ -14,7 +14,10 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
-      - ./log:/log
+      - ./var/log:/log
+    read_only: true
+    tmpfs:
+      - /tmp
     secrets:
       - crowdsec_api_key
     networks:
@@ -30,4 +33,4 @@ volumes:
 
 secrets:
   crowdsec_api_key:
-    file: ./secrets/crowdsec_api_key
+    file: var/secrets/crowdsec_api_key
