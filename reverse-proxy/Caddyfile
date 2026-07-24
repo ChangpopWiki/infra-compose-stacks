@@ -19,6 +19,12 @@
 	route {
 		crowdsec
 
+		handle_path /-/stats/script.js {
+			reverse_proxy https://cloud.umami.is {
+				header_up Host cloud.umami.is
+			}
+		}
+
 		redir /premiere-relay-archive /premiere-relay-archive/ 301
 
 		handle_path /premiere-relay-archive/* {
