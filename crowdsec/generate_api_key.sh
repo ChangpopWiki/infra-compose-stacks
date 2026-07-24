@@ -9,10 +9,11 @@ set -o pipefail
 log() { echo "==> $*"; }
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "${SCRIPT_DIR}"
+PROJECT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+cd "${PROJECT_DIR}"
 
 BOUNCER_NAME="caddy-bouncer"
-SECRET_PATH="../reverse-proxy/var/secrets/crowdsec_api_key"
+SECRET_PATH="reverse-proxy/var/secrets/crowdsec_api_key"
 
 # sudo로 실행됐다면(SUDO_UID/SUDO_GID는 sudo가 자동 설정) 스크립트 종료 시
 # 생성된 파일의 소유권을 원래 호출한 사용자로 되돌립니다.
@@ -59,4 +60,4 @@ docker compose exec --no-TTY crowdsec \
 chmod 600 "${SECRET_PATH}"
 
 log "완료했습니다: ${SECRET_PATH}"
-log "이제 전체 스택을 올려주세요: docker compose --project-directory .. up --detach"
+log "이제 전체 스택을 올려주세요: docker compose up --detach"
