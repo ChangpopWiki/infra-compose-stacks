@@ -4,6 +4,8 @@ services:
     restart: unless-stopped
     environment:
       COLLECTIONS: "crowdsecurity/caddy crowdsecurity/linux"
+      TZ: Asia/Seoul
+      LEVEL_WARN: true
     healthcheck:
       test: [ "CMD", "cscli", "lapi", "status" ]
       interval: 5s
