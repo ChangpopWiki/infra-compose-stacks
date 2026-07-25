@@ -4,9 +4,7 @@
 		api_key {$CROWDSEC_API_KEY:_}
 		ticker_interval 15s
 	}
-}
 
-{$SITE_DOMAIN} {
 	log {
 		output file /log/access.log {
 			roll_size 10mb
@@ -15,7 +13,10 @@
 			mode 644
 		}
 	}
+}
 
+{$BASE_URL} {
+	log
 	route {
 		crowdsec
 
@@ -34,5 +35,18 @@
 		handle {
 			reverse_proxy mediawiki:80
 		}
+	}
+}
+
+sencho.{$BASE_URL} {
+	log
+
+	@allowed remote_ip {$ADMIN_IP_LIST} private_ranges
+	handle @allowed {
+		reverse_proxy sencho:1852
+	}
+
+	handle {
+		abort
 	}
 }
