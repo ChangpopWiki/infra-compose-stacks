@@ -1,6 +1,4 @@
 {
-	import {$DEV_FILE_NAME:Caddyfile.placeholder}
-
 	crowdsec {
 		api_url http://crowdsec:8080
 		api_key {$CROWDSEC_API_KEY:_}

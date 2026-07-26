@@ -11,7 +11,7 @@ services:
       - CROWDSEC_API_KEY_FILE=/run/secrets/crowdsec_api_key
     volumes:
       - ./entrypoint.sh:/entrypoint.sh:ro
-      - ./caddy:/etc/caddy/
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
       - ./var/log:/log
