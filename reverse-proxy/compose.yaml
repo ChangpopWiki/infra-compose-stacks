@@ -9,6 +9,7 @@ services:
     environment:
       - BASE_URL=changpop.wiki
       - CROWDSEC_API_KEY_FILE=/run/secrets/crowdsec_api_key
+      - ADMIN_IP_LIST=${ADMIN_IP_LIST}
     volumes:
       - ./entrypoint.sh:/entrypoint.sh:ro
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
