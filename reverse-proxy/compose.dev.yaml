@@ -2,21 +2,23 @@ services:
   reverse-proxy:
     environment:
       - BASE_URL=${BASE_URL:-chp.localhost:80}
+      - DEV_FILE_NAME=Caddyfile.dev
     depends_on:
       caddy-validate:
         condition: service_completed_successfully
 
   caddy-validate:
     image: ghcr.io/serfriz/caddy-cloudflare-crowdsec:2
-    command: caddy validate --config /Caddyfile
+    command: caddy validate --config /etc/caddy/Caddyfile
     environment:
       - BASE_URL=${BASE_URL:-chp.localhost:80}
+      - DEV_FILE_NAME=Caddyfile.dev
     volumes:
-      - ./Caddyfile:/Caddyfile:ro
+      - ./caddy:/etc/caddy/
 
   caddy-format:
     image: ghcr.io/serfriz/caddy-cloudflare-crowdsec:2
     profiles: [ "one-shot" ]
-    command: caddy fmt --overwrite --config /Caddyfile
+    command: caddy fmt --overwrite --config /etc/caddy/Caddyfile
     volumes:
-      - ./Caddyfile:/Caddyfile
+      - ./caddy:/etc/caddy/
