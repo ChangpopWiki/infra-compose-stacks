@@ -5,13 +5,14 @@
 		ticker_interval 15s
 	}
 
-	log {
+	log access {
 		output file /log/access.log {
 			roll_size 100mb
 			roll_keep 30
 			roll_keep_for 720h
 			mode 644
 		}
+		include http.log.access
 	}
 }
 
